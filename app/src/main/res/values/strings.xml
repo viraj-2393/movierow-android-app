@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Movie Row</string>
+    <string name="loading">Please wait...</string>
+    <string name="no_internet_text">No internet connection found. Please check your Network connection and Try again!</string>
+</resources>

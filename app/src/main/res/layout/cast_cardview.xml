@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/search_cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0a0a0a"
+    android:layout_marginTop="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id = "@+id/s_m_p"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="8dp"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <ImageView
+            android:id = "@+id/actor_poster"
+            android:background="#303030"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id = "@+id/actor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/s_m_p"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text = "Some Joe"
+        android:textColor = "#ffffff"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id = "@+id/character_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/s_m_p"
+        app:layout_constraintTop_toBottomOf="@id/actor_name"
+        android:text = "Character: Tad"
+        android:textColor = "#ffffff"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

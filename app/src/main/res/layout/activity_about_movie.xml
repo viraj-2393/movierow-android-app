@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Activities.AboutMovie">
+
+   <LinearLayout
+       android:id = "@+id/movie_detials"
+       android:layout_width="150dp"
+       android:layout_height="340dp"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:gravity="center_horizontal"
+       android:orientation="vertical">
+
+       <ImageButton
+           android:id = "@+id/go_back"
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:src = "@drawable/go_back"
+           android:layout_marginTop="10dp"
+           android:padding = "10dp"
+           android:background="@drawable/go_back_background"
+           android:scaleType="fitCenter"/>
+
+       <TextView
+           android:id = "@+id/movie_language"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:rotation = "270"
+           android:layout_marginTop="30dp"
+           android:layout_marginBottom="15dp"
+           android:text = "EN"
+           android:layout_gravity="center"
+           android:textColor = "#ffffff"/>
+
+       <ImageButton
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:src = "@drawable/language"
+           android:rotation="270"
+           android:background="@null"
+           android:scaleType="fitCenter"/>
+
+       <TextView
+           android:id = "@+id/release_year"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:rotation = "270"
+           android:layout_marginTop="30dp"
+           android:layout_marginBottom="15dp"
+           android:text = "2021"
+           android:layout_gravity="center"
+           android:textColor = "#ffffff"/>
+
+       <ImageButton
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:rotation="270"
+           android:src = "@drawable/calender"
+           android:background="@null"
+           android:scaleType="fitCenter"/>
+
+       <TextView
+           android:id = "@+id/vote_average"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:rotation = "270"
+           android:layout_marginTop="30dp"
+           android:layout_marginBottom="10dp"
+           android:text = "4.8"
+           android:layout_gravity="center"
+           android:textColor = "#ffffff"/>
+
+       <ImageButton
+           android:layout_width="25dp"
+           android:layout_height="25dp"
+           android:rotation="270"
+           android:src = "@drawable/rating"
+           android:background="@null"
+           android:scaleType="fitCenter"/>
+
+
+   </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/movie_detials">
+    <ImageView
+        android:id = "@+id/movie_poster_large"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        android:background="#303030"
+        android:src = "@drawable/sample_poster"
+        android:scaleType="fitXY"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id = "@+id/movie_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor = "#AFAFAF"
+        android:textSize = "20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_detials"
+        android:layout_marginStart = "20dp"/>
+
+    <LinearLayout
+        android:id ="@+id/watch_trailer"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_marginStart = "20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_name"
+        android:background="@drawable/watch_trailer_background"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="Watch Trailer"
+            android:textColor = "#ffffff"
+            android:textStyle="bold"
+            />
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src = "@drawable/movie"
+            android:rotation="300"
+            android:layout_marginLeft="5dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id = "@+id/heart_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop = "10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_name"
+        android:src ="@drawable/cold_heart"
+        />
+
+
+    <TextView
+        android:id = "@+id/introduction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "Introduction"
+        android:textColor = "#AFAFAF"
+        android:textSize = "20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/watch_trailer"
+        android:layout_marginStart = "20dp"/>
+
+    <TextView
+        android:id = "@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scrollbars = "vertical"
+        android:text = "About the Movie...."
+        android:textColor = "#404040"
+        android:textSize = "14dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/introduction"
+        android:layout_marginStart = "20dp"
+        android:layout_marginEnd="20dp"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

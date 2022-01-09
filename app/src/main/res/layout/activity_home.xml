@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:paddingBottom="20dp"
+    tools:context=".Activities.Home">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/basic_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding = "20dp"
+        app:layout_constraintTop_toTopOf = "parent"
+        app:layout_constraintBottom_toTopOf="@id/content"
+        >
+
+        <TextView
+            android:id = "@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor = "@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            android:textSize="20dp"
+            android:text = "Hey Clara"/>
+        <TextView
+            android:id = "@+id/today_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@id/username"
+            android:textColor = "#404040"
+            android:text = "Today, 07 December"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/greendude"
+            app:civ_border_width="2dp"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            app:civ_border_color="#FF000000"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id ="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/basic_user_info"
+        app:layout_constraintBottom_toTopOf="@id/home"
+        >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <TextView
+        android:id = "@+id/latest_hits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor = "#404040"
+        android:textSize = "20dp"
+        android:layout_marginLeft = "20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text = "Latest Hits"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/movie_poster_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:padding = "10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf = "@id/latest_hits"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id = "@+id/movies_for_kids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor = "#404040"
+        android:textSize = "20dp"
+        android:layout_marginLeft = "20dp"
+        android:layout_marginTop = "20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_poster_view"
+        android:text = "Movies for Kids"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/kids_movie_poster_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:padding = "10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf = "@id/movies_for_kids"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id = "@+id/tv_shows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor = "#404040"
+            android:textSize = "20dp"
+            android:layout_marginLeft = "20dp"
+            android:layout_marginTop = "20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/kids_movie_poster_view"
+            android:text = "Popular Tv Shows"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id = "@+id/tv_shows_poster_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:padding = "10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf = "@id/tv_shows"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id = "@+id/home"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src = "@drawable/ic_home"/>
+
+    <ImageButton
+        android:id = "@+id/search"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@id/home"
+        app:layout_constraintRight_toLeftOf="@id/account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@null"
+        android:src = "@drawable/ic_search"/>
+
+    <ImageButton
+        android:id = "@+id/account"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@id/search"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src = "@drawable/account"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
