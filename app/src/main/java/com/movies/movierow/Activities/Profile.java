@@ -39,6 +39,7 @@ public class Profile extends AppCompatActivity {
     ConstraintLayout user_info;
     AppCompatButton login,logout;
     TextView movies_watched;
+    ImageButton go_back_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,7 @@ public class Profile extends AppCompatActivity {
         login = findViewById(R.id.login);
         logout = findViewById(R.id.logout);
         movies_watched = findViewById(R.id.movies_watched);
+        go_back_button = findViewById(R.id.go_back_button);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
         String name = sharedPreferences.getString("name","Clara");
@@ -93,6 +95,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 logout();
+            }
+        });
+
+        //go back to the home page
+        go_back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 

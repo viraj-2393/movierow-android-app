@@ -19,6 +19,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.movies.movierow.API.Movies;
+import com.movies.movierow.Adapters.SearchTvAdapter;
 import com.movies.movierow.Models.KidMovie;
 import com.movies.movierow.Models.KidMoviesModel;
 import com.movies.movierow.Models.MovieDetails;
@@ -48,6 +49,7 @@ public class AboutMovie extends AppCompatActivity {
     private TextView movie_language;
     private ImageButton go_back;
     private ImageView heart_button;
+    private ImageButton home,search,proflie;
     private boolean is_fav = false;
     private int movieId;
     LinearLayout watch_trailer;
@@ -71,6 +73,9 @@ public class AboutMovie extends AppCompatActivity {
         go_back = findViewById(R.id.go_back);
         heart_button = findViewById(R.id.heart_button);
         watch_trailer = findViewById(R.id.watch_trailer);
+        home = findViewById(R.id.home);
+        search = findViewById(R.id.search);
+        proflie = findViewById(R.id.account);
 
 
 
@@ -101,6 +106,30 @@ public class AboutMovie extends AppCompatActivity {
                 intent.putExtra("movieID",movieId);
                 intent.putExtra("type",type);
                 startActivity(intent);
+            }
+        });
+
+        //go to profile page
+        proflie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Profile.class));
+            }
+        });
+
+        //go to home page
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Home.class));
+            }
+        });
+
+        //go to search page
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SearchMovie.class));
             }
         });
 
