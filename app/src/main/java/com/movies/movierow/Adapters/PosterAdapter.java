@@ -59,9 +59,6 @@ public class PosterAdapter extends RecyclerView.Adapter {
         ((MoviePosterViewHolder) holder).posterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("position",position);
-//                bundle.putParcelable("obj",movies);
                 Intent intent = new Intent(view.getContext(),AboutMovie.class);
                 intent.putExtra("position",position);
                 intent.putExtra("obj", movies);
@@ -92,7 +89,7 @@ public class PosterAdapter extends RecyclerView.Adapter {
         }
         void bindView(MovieDetails movies)
         {
-            Picasso.get().load("https://image.tmdb.org/t/p/original"+movies.getPoster_path()).into(posterImage);
+            Picasso.get().load("https://image.tmdb.org/t/p/w500"+movies.getPoster_path()).into(posterImage);
         }
     }
 }

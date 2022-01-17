@@ -94,7 +94,7 @@ public class TvPosterViewHolder extends RecyclerView.ViewHolder
             if(tvShow.getPoster_path() == null){
                 Picasso.get().load(R.drawable.not_found).into(posterImage);
             }else {
-                Picasso.get().load("https://image.tmdb.org/t/p/original" + tvShow.getPoster_path()).into(posterImage);
+                Picasso.get().load("https://image.tmdb.org/t/p/w500" + tvShow.getPoster_path()).into(posterImage);
             }
             tvShowTitle.setText(tvShow.getName());
             if (tvShow.getFirst_air_date() != null && !tvShow.getFirst_air_date().equals(""))

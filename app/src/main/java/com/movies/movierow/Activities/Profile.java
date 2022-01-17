@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.movies.movierow.API.Movies;
 import com.movies.movierow.Adapters.PosterAdapter;
+import com.movies.movierow.MainActivity;
 import com.movies.movierow.Models.PopularMoviesModel;
 import com.movies.movierow.R;
 import com.movies.movierow.Utils.MrProjectApp;
@@ -169,7 +170,7 @@ public class Profile extends AppCompatActivity {
             public void onClick(DialogInterface arg0, int arg1) {
                 SharedPreferences settings = getApplicationContext().getSharedPreferences("User", Context.MODE_PRIVATE);
                 settings.edit().clear().apply();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 

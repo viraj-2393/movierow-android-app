@@ -39,29 +39,35 @@
         app:layout_constraintTop_toBottomOf="@id/search_text"
         app:layout_constraintLeft_toRightOf="@id/go_back_button"
         android:layout_marginLeft="10dp"
-        android:text = "676,679 records available"
+        android:text = "1M+ records available"
         android:textColor = "#AFAFAF"
         android:textSize="15dp"/>
+
 
     <LinearLayout
         android:id = "@+id/search_movie_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/records_text"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="vertical"
         android:background="@drawable/search_background"
         >
-    <Spinner
-        android:id ="@+id/movie_or_tvshow"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        />
+        <Spinner
+            android:id ="@+id/movie_or_tvshow"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#0a0a0a"/>
     <SearchView
         android:id = "@+id/search_movies"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:queryHint="Search Movies"
+        app:queryHint="Search..."
         android:clickable="true"
         />
     </LinearLayout>

@@ -99,6 +99,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 dialog.dismiss();
                 if (response.isSuccessful() && response.code() == 201) {
+                    Toast.makeText(getApplicationContext(),"OTP sent to your Email Address.",Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 }
                 else{

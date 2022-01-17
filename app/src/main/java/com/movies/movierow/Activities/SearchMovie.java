@@ -45,13 +45,13 @@ public class SearchMovie extends AppCompatActivity {
 
         search_movies = findViewById(R.id.search_movies);
         search_movies.setIconifiedByDefault(false);
-        search_movies.setQueryHint("Search Movies");
+        search_movies.setQueryHint("Search...");
         go_back_button = findViewById(R.id.go_back_button);
         not_found = findViewById(R.id.not_found);
         movie_or_tvshow = findViewById(R.id.movie_or_tvshow);
 
         //set adapter for movie or tvshow picker
-        String[] kind = {"movie","tv"};
+        String[] kind = {"Movie","TV Show"};
         ArrayAdapter ad = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,kind);
         movie_or_tvshow.setAdapter(ad);
 
@@ -75,7 +75,7 @@ public class SearchMovie extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(movie_or_tvshow.getSelectedItem().equals("movie")){
+                if(movie_or_tvshow.getSelectedItem().equals("Movie")){
                     getTheMovie(newText);
                 }
                 else{
@@ -103,7 +103,7 @@ public class SearchMovie extends AppCompatActivity {
                 PopularMoviesModel serverResponse = response.body();
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.movie_search_results);
                 if(response.body() != null && serverResponse.getResults().size() == 0){
-                    Toast.makeText(getApplicationContext(),"No results found",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"No results found",Toast.LENGTH_LONG).show();
                     not_found.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
@@ -147,7 +147,7 @@ public class SearchMovie extends AppCompatActivity {
                 TvShowModel serverResponse = response.body();
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.movie_search_results);
                 if(response.body() != null && serverResponse.getResults().size() == 0){
-                    Toast.makeText(getApplicationContext(),"No results found",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"No results found",Toast.LENGTH_LONG).show();
                     not_found.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }

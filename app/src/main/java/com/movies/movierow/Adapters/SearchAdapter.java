@@ -96,7 +96,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                 if(movies.getPoster_path() == null){
                     Picasso.get().load(R.drawable.not_found).into(posterImage);
                 }else {
-                    Picasso.get().load("https://image.tmdb.org/t/p/original" + movies.getPoster_path()).into(posterImage);
+                    Picasso.get().load("https://image.tmdb.org/t/p/w154" + movies.getPoster_path()).into(posterImage);
                 }
                 movieTitle.setText(movies.getTitle());
                 if (movies.getRelease_date() != null && !movies.getRelease_date().equals(""))

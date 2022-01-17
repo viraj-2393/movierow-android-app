@@ -82,7 +82,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter {
         }
         void bindView(MovieDetails movies)
         {
-            Picasso.get().load("https://image.tmdb.org/t/p/original"+movies.getPoster_path()).into(FavouriteImage);
+            Picasso.get().load("https://image.tmdb.org/t/p/w500"+movies.getPoster_path()).into(FavouriteImage);
         }
     }
 }

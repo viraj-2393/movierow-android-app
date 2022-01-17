@@ -84,7 +84,7 @@ public class KidPosterAdapter extends RecyclerView.Adapter {
         }
         void bindView(KidMovie movies)
         {
-            Picasso.get().load("https://image.tmdb.org/t/p/original"+movies.getPoster_path()).into(posterImage);
+            Picasso.get().load("https://image.tmdb.org/t/p/w500"+movies.getPoster_path()).into(posterImage);
         }
     }
 }
