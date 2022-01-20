@@ -33,6 +33,7 @@ import com.movies.movierow.Utils.MrProjectApp;
 import com.squareup.picasso.Picasso;
 
 import java.io.PipedOutputStream;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +50,7 @@ public class AboutMovie extends AppCompatActivity {
     private TextView movie_language;
     private ImageButton go_back;
     private ImageView heart_button;
-    private ImageButton home,search,proflie;
+    private ImageButton home,search,explore,trending_page;
     private boolean is_fav = false;
     private int movieId;
     LinearLayout watch_trailer;
@@ -60,7 +61,6 @@ public class AboutMovie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_about_movie);
 
@@ -75,7 +75,8 @@ public class AboutMovie extends AppCompatActivity {
         watch_trailer = findViewById(R.id.watch_trailer);
         home = findViewById(R.id.home);
         search = findViewById(R.id.search);
-        proflie = findViewById(R.id.account);
+        explore = findViewById(R.id.explore);
+        trending_page = findViewById(R.id.trending);
 
 
 
@@ -109,11 +110,19 @@ public class AboutMovie extends AppCompatActivity {
             }
         });
 
-        //go to profile page
-        proflie.setOnClickListener(new View.OnClickListener() {
+        //go to explore page
+        explore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Profile.class));
+                startActivity(new Intent(getApplicationContext(),Explore.class));
+            }
+        });
+
+        //go to trending page
+        trending_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Trending.class));
             }
         });
 
@@ -142,10 +151,45 @@ public class AboutMovie extends AppCompatActivity {
         else if(caller.equals("102")){
             kidMovies();
         }
+        else if(caller.equals("EXPL")){
+            exploreMovies();
+        }
         else{
             TvShow();
         }
 
+    }
+
+    private void exploreMovies(){
+        List<MovieDetails> movies = (List<MovieDetails>)getIntent().getSerializableExtra("obj");
+        type = "movie";
+        int index = getIntent().getIntExtra("position",0);
+        String img_path = movies.get(index).getPoster_path();
+        movieId = movies.get(index).getId(); //Get Movie Id to set it as favourite
+        //check if the movie is favourite
+        MovieID mID = MrProjectApp.getMovieID();
+        if(mID.getMovieIds().contains(movieId)){
+            heart_button.setImageResource(R.drawable.heart);
+        }
+        else{
+            heart_button.setImageResource(R.drawable.cold_heart);
+        }
+
+        MovieDetails movieDetails = movies.get(index);
+        query = movieDetails.getTitle();
+        if(movieDetails.getRelease_date() != null) year = movieDetails.getRelease_date().substring(0,4);
+        if(movieDetails != null){
+            if(movieDetails.getPoster_path() == null){
+                Picasso.get().load(R.drawable.not_found).into(posterImage);
+            }else {
+                Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
+            }
+            movie_name.setText(query);
+            movie_description.setText(movieDetails.getOverview());
+            movie_voteAverage.setText(String.valueOf(movieDetails.getVote_average()));
+            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals(""))release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            movie_language.setText(movieDetails.getOriginal_language().toUpperCase());
+        }
     }
 
     private void popularMovies(){

@@ -19,21 +19,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRow"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ForgotPassword"></activity>
+        <activity android:name=".Activities.Explore"></activity>
+        <activity android:name=".Activities.Trending" />
+        <activity android:name=".Activities.ForgotPassword" />
         <activity android:name=".Activities.VerifyOtp" />
         <activity
             android:name=".Activities.YtubePlayer"
             android:exported="true" />
         <activity android:name=".Activities.NoInternet" />
-        <activity
-            android:name=".Activities.SignupActivity"
-             />
+        <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.Profile" />
         <activity android:name=".Activities.SearchMovie" />
         <activity android:name=".Activities.AboutMovie" />
         <activity android:name=".Activities.Home" />
-        <activity android:name=".MainActivity" android:exported="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

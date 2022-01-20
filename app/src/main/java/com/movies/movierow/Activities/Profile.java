@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -41,6 +42,8 @@ public class Profile extends AppCompatActivity {
     AppCompatButton login,logout;
     TextView movies_watched;
     ImageButton go_back_button;
+    ImageButton explore;
+    ImageButton trending;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,8 @@ public class Profile extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         movies_watched = findViewById(R.id.movies_watched);
         go_back_button = findViewById(R.id.go_back_button);
+        explore = findViewById(R.id.explore);
+        trending = findViewById(R.id.trending);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
         String name = sharedPreferences.getString("name","Clara");
@@ -99,11 +104,25 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        trending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Trending.class));
+            }
+        });
+
         //go back to the home page
         go_back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Explore.class));
             }
         });
 

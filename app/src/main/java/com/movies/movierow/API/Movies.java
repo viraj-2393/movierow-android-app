@@ -7,6 +7,7 @@ import com.movies.movierow.Models.KidMoviesModel;
 import com.movies.movierow.Models.MovieID;
 import com.movies.movierow.Models.PopularMoviesModel;
 import com.movies.movierow.Models.Trailer;
+import com.movies.movierow.Models.Trends;
 import com.movies.movierow.Models.TvShowModel;
 import com.movies.movierow.Models.UserModel;
 
@@ -47,6 +48,9 @@ public interface Movies {
 
     @GET("credits")
     Call<CastDetails> getAllCast(@Query("api_key") String api_key,@Query("language") String language);
+
+    @GET("trending/person/day")
+    Call<Trends> getTrending(@Query("api_key") String api_key);
 
     @POST("auth/login")
     Call<UserModel> login(@Body JsonObject jsonObject);

@@ -22,6 +22,7 @@ import com.movies.movierow.Models.KidMoviesModel;
 import com.movies.movierow.Models.PopularMoviesModel;
 import com.movies.movierow.Models.TvShowModel;
 import com.movies.movierow.R;
+import com.movies.movierow.Utils.AppConstants;
 
 import org.w3c.dom.Text;
 
@@ -30,6 +31,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,31 +41,35 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Home extends AppCompatActivity {
     ImageButton home;
     ImageButton search;
-    ImageButton profile;
+    ImageButton explore_movies;
+    ImageButton trending;
     TextView username;
+    CircleImageView profile;
+
     TextView today_date;
     private long pressedTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_home);
 
         search = findViewById(R.id.search);
-        profile = findViewById(R.id.account);
+        profile = findViewById(R.id.profile_image);
+        trending = findViewById(R.id.trending);
         username = findViewById(R.id.username);
         today_date = findViewById(R.id.today_date);
+        explore_movies = findViewById(R.id.explore);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
-        String name = sharedPreferences.getString("name","Hey, Clara");
+        String name = sharedPreferences.getString("name","Explore");
 
         //set date and time on the home screen
-        if(name.equals("Hey, Clara")){
+        if(name.equals("Explore")){
             username.setText(name);
         }else
         {
-            username.setText("Hey, " + name.split(" ")[0]);
+            username.setText("Explore");
         }
 
         SimpleDateFormat f = new SimpleDateFormat("MMM");
@@ -86,6 +92,20 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        trending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Trending.class));
+            }
+        });
+
+        explore_movies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Explore.class));
+            }
+        });
+
         getALlTheMoviePoster();
 
         getAllTheMovieForKids();
@@ -96,13 +116,13 @@ public class Home extends AppCompatActivity {
 
     private void getALlTheMoviePoster(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(AppConstants.TMDB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Movies service = retrofit.create(Movies.class);
 
-        Call<PopularMoviesModel> call = service.getMovies("c09b417853b21948266e85cb76df8365","en-US","popularity.desc",
+        Call<PopularMoviesModel> call = service.getMovies(AppConstants.TMDB_API_KEY,"en-US","popularity.desc",
                 false,false,1,"flatrate");
         call.enqueue(new Callback<PopularMoviesModel>() {
 
@@ -134,13 +154,13 @@ public class Home extends AppCompatActivity {
 
     private void getAllTheMovieForKids(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(AppConstants.TMDB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Movies service = retrofit.create(Movies.class);
 
-        Call<KidMoviesModel> call = service.getKidMovies("c09b417853b21948266e85cb76df8365","US",
+        Call<KidMoviesModel> call = service.getKidMovies(AppConstants.TMDB_API_KEY,"US",
                 "G",16,true,"popularity.desc");
         call.enqueue(new Callback<KidMoviesModel>() {
 
@@ -172,13 +192,13 @@ public class Home extends AppCompatActivity {
 
     private void getAllTvShows(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(AppConstants.TMDB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Movies service = retrofit.create(Movies.class);
 
-        Call<TvShowModel> call = service.getTvShows("c09b417853b21948266e85cb76df8365","en-US",1);
+        Call<TvShowModel> call = service.getTvShows(AppConstants.TMDB_API_KEY,"en-US",1);
         call.enqueue(new Callback<TvShowModel>() {
 
             @Override
