@@ -1,6 +1,7 @@
 package com.movies.movierow.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +46,7 @@ public class Home extends AppCompatActivity {
     ImageButton trending;
     TextView username;
     CircleImageView profile;
+    AppCompatButton go_to_quiz;
 
     TextView today_date;
     private long pressedTime;
@@ -60,6 +62,7 @@ public class Home extends AppCompatActivity {
         username = findViewById(R.id.username);
         today_date = findViewById(R.id.today_date);
         explore_movies = findViewById(R.id.explore);
+        go_to_quiz = findViewById(R.id.quizz);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
         String name = sharedPreferences.getString("name","Explore");
@@ -103,6 +106,13 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),Explore.class));
+            }
+        });
+
+        go_to_quiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Quizz.class));
             }
         });
 
