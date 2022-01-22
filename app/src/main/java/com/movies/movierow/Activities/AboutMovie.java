@@ -274,7 +274,7 @@ public class AboutMovie extends AppCompatActivity {
 
         TvShow tvShowDetails = model.getResults().get(index);
         query = tvShowDetails.getName();
-        if(tvShowDetails.getFirst_air_date() != null) year = tvShowDetails.getFirst_air_date().substring(0,4);
+        if(tvShowDetails.getFirst_air_date() != null && !tvShowDetails.getFirst_air_date().equals("")) year = tvShowDetails.getFirst_air_date().substring(0,4);
         if(model != null){
             if(tvShowDetails.getPoster_path() == null){
                 Picasso.get().load(R.drawable.not_found).into(posterImage);

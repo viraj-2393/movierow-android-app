@@ -40,15 +40,45 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id = "@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text = "Score: 0"
+        android:textColor = "#ffffff"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id = "@+id/high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text = "High Score: 0"
+        android:textColor = "#ffffff"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"/>
+
     <LinearLayout
-        android:id = "@+id/player_life"
+        android:id = "@+id/player_life_container"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:background="@drawable/life"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        android:background="#303030"
+        android:weightSum="4"
+        app:layout_constraintTop_toBottomOf="@id/score"
         app:layout_constraintLeft_toLeftOf="parent">
+
+       <LinearLayout
+           android:id = "@+id/player_life"
+           android:layout_width="0dp"
+           android:layout_height="10dp"
+           android:layout_weight="4"
+           android:orientation="horizontal"
+           android:background="@drawable/life"/>
 
 
 
@@ -62,7 +92,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/player_life"
+        app:layout_constraintTop_toBottomOf="@id/player_life_container"
         app:cardBackgroundColor="#303030"
         app:cardCornerRadius="15dp"
         app:cardElevation="20dp"
@@ -187,6 +217,7 @@
             android:scaleType="fitCenter"
             android:layout_gravity="center_vertical"
             android:layout_alignParentLeft= "true"
+            android:visibility="gone"
             />
 
 
