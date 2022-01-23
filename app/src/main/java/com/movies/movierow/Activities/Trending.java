@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Trending extends AppCompatActivity {
     ImageButton go_back_button;
-    private ImageButton home,search,explore;
+    private ImageButton home,search,explore,fav_page;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +65,14 @@ public class Trending extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SearchMovie.class));
+            }
+        });
+
+        fav_page = findViewById(R.id.fav_page);
+        fav_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Favorite.class));
             }
         });
 

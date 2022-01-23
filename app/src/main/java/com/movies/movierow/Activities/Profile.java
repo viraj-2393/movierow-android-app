@@ -44,6 +44,7 @@ public class Profile extends AppCompatActivity {
     ImageButton go_back_button;
     ImageButton explore;
     ImageButton trending;
+    ImageButton fav_page;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +124,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),Explore.class));
+            }
+        });
+
+        fav_page = findViewById(R.id.fav_page);
+        fav_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Favorite.class));
             }
         });
 

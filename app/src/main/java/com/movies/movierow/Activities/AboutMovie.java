@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewManager;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.movies.movierow.API.Movies;
 import com.movies.movierow.Adapters.SearchTvAdapter;
+import com.movies.movierow.Controllers.ViewModal;
+import com.movies.movierow.Models.FavModal;
 import com.movies.movierow.Models.KidMovie;
 import com.movies.movierow.Models.KidMoviesModel;
 import com.movies.movierow.Models.MovieDetails;
@@ -50,13 +53,18 @@ public class AboutMovie extends AppCompatActivity {
     private TextView movie_language;
     private ImageButton go_back;
     private ImageView heart_button;
-    private ImageButton home,search,explore,trending_page;
+    private ImageButton home,search,explore,trending_page,fav_page;
     private boolean is_fav = false;
     private int movieId;
     LinearLayout watch_trailer;
-    String query;
-    String year;
-    String type;
+    String query = "";
+    String year = "";
+    String type = "";
+    String description = "";
+    String language = "";
+    String rating = "";
+    String img_path = "";
+    private FavModal favModal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,7 @@ public class AboutMovie extends AppCompatActivity {
 
 
 
+
         //go back
         go_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +101,23 @@ public class AboutMovie extends AppCompatActivity {
         heart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
-                String token = sharedPreferences.getString("token","");
-                setFavMovie(token,movieId);
+                if(!is_fav) {
+                    FavModal favModal = new FavModal(movieId, query, description, img_path, rating, year, language, type);
+                    ViewModal viewModal = new ViewModal(getApplication(), "", 0);
+                    viewModal.insert(favModal);
+                    Toast.makeText(getApplicationContext(), "Added to Favorites", Toast.LENGTH_SHORT).show();
+                    heart_button.setImageResource(R.drawable.heart);
+                    is_fav = true;
+
+                }
+                else{
+                    ViewModal viewModal = new ViewModal(getApplication(), "", movieId);
+                    FavModal favModal = viewModal.getFav(movieId);
+                    viewModal.delete(favModal);
+                    Toast.makeText(getApplicationContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+                    heart_button.setImageResource(R.drawable.cold_heart);
+                    is_fav = false;
+                }
             }
         });
 
@@ -142,6 +165,14 @@ public class AboutMovie extends AppCompatActivity {
             }
         });
 
+        fav_page = findViewById(R.id.fav_page);
+        fav_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Favorite.class));
+            }
+        });
+
         movie_description.setMovementMethod(new ScrollingMovementMethod());
 
         String caller = getIntent().getStringExtra("Caller");
@@ -154,17 +185,71 @@ public class AboutMovie extends AppCompatActivity {
         else if(caller.equals("EXPL")){
             exploreMovies();
         }
+        else if(caller.equals("FAV")){
+            favMovies();
+        }
         else{
             TvShow();
         }
 
+        //check if the movie is favorite or not
+        ViewModal viewModal = new ViewModal(getApplication(),"",movieId);
+        favModal = viewModal.getFav(movieId);
+        if(favModal != null){
+            is_fav = true;
+            heart_button.setImageResource(R.drawable.heart);
+        }
+
+    }
+
+    private void favMovies() {
+        FavModal favModal = (FavModal) getIntent().getSerializableExtra("obj");
+        type = favModal.getType();
+        int index = getIntent().getIntExtra("position", 0);
+        img_path = favModal.getPoster_path();
+        movieId = favModal.getMovieID(); //Get Movie Id to set it as favourite
+        //check if the movie is favourite
+        MovieID mID = MrProjectApp.getMovieID();
+        if (mID.getMovieIds().contains(movieId)) {
+            heart_button.setImageResource(R.drawable.heart);
+        } else {
+            heart_button.setImageResource(R.drawable.cold_heart);
+        }
+
+        query = favModal.getName();
+        if (favModal.getYear() != null) year = favModal.getYear();//.substring(0,4);
+        if (favModal != null) {
+            if (favModal.getPoster_path() == null) {
+                Picasso.get().load(R.drawable.not_found).into(posterImage);
+            } else {
+                Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
+            }
+            movie_name.setText(query);
+            //set movie description
+            movie_description.setText(favModal.getDescription());
+            description = favModal.getDescription();
+            //--------------
+
+            //set rating
+            movie_voteAverage.setText(String.valueOf(favModal.getRating()));
+            rating = String.valueOf(favModal.getRating());
+            //--------------
+            if (favModal.getYear() != null && !favModal.getYear().equals("")) {
+                release_year.setText(favModal.getYear());
+            }
+
+            //set language
+            movie_language.setText(favModal.getLanguage().toUpperCase());
+            language = favModal.getLanguage().toUpperCase();
+            //------------
+        }
     }
 
     private void exploreMovies(){
         List<MovieDetails> movies = (List<MovieDetails>)getIntent().getSerializableExtra("obj");
         type = "movie";
         int index = getIntent().getIntExtra("position",0);
-        String img_path = movies.get(index).getPoster_path();
+        img_path = movies.get(index).getPoster_path();
         movieId = movies.get(index).getId(); //Get Movie Id to set it as favourite
         //check if the movie is favourite
         MovieID mID = MrProjectApp.getMovieID();
@@ -185,10 +270,23 @@ public class AboutMovie extends AppCompatActivity {
                 Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
             }
             movie_name.setText(query);
+            //set movie description
             movie_description.setText(movieDetails.getOverview());
+            description = movieDetails.getOverview();
+            //--------------
+
+            //set rating
             movie_voteAverage.setText(String.valueOf(movieDetails.getVote_average()));
-            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals(""))release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            rating = String.valueOf(movieDetails.getVote_average());
+            //--------------
+            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals("")){
+                release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            }
+
+            //set language
             movie_language.setText(movieDetails.getOriginal_language().toUpperCase());
+            language = movieDetails.getOriginal_language().toUpperCase();
+            //------------
         }
     }
 
@@ -196,7 +294,7 @@ public class AboutMovie extends AppCompatActivity {
         PopularMoviesModel model = (PopularMoviesModel)getIntent().getSerializableExtra("obj");
         type = "movie";
         int index = getIntent().getIntExtra("position",0);
-        String img_path = model.getResults().get(index).getPoster_path();
+        img_path = model.getResults().get(index).getPoster_path();
         movieId = model.getResults().get(index).getId(); //Get Movie Id to set it as favourite
         //check if the movie is favourite
         MovieID mID = MrProjectApp.getMovieID();
@@ -217,10 +315,23 @@ public class AboutMovie extends AppCompatActivity {
                 Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
             }
             movie_name.setText(query);
+            //set movie description
             movie_description.setText(movieDetails.getOverview());
+            description = movieDetails.getOverview();
+            //--------------
+
+            //set rating
             movie_voteAverage.setText(String.valueOf(movieDetails.getVote_average()));
-            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals(""))release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            rating = String.valueOf(movieDetails.getVote_average());
+            //--------------
+            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals("")){
+                release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            }
+
+            //set language
             movie_language.setText(movieDetails.getOriginal_language().toUpperCase());
+            language = movieDetails.getOriginal_language().toUpperCase();
+            //------------
         }
 
     }
@@ -229,7 +340,7 @@ public class AboutMovie extends AppCompatActivity {
         KidMoviesModel model = (KidMoviesModel)getIntent().getSerializableExtra("obj");
         type = "movie";
         int index = getIntent().getIntExtra("position",0);
-        String img_path = model.getResults().get(index).getPoster_path();
+        img_path = model.getResults().get(index).getPoster_path();
         movieId = model.getResults().get(index).getId(); //Get Movie Id to set it as favourite
         //check if the movie is favourite
         MovieID mID = MrProjectApp.getMovieID();
@@ -242,7 +353,9 @@ public class AboutMovie extends AppCompatActivity {
 
         KidMovie movieDetails = model.getResults().get(index);
         query = movieDetails.getTitle();
-        if(movieDetails.getRelease_date() != null) year = movieDetails.getRelease_date().substring(0,4);
+        if(movieDetails.getRelease_date() != null){
+            year = movieDetails.getRelease_date().substring(0,4);
+        }
         if(model != null){
             if(movieDetails.getPoster_path() == null){
                 Picasso.get().load(R.drawable.not_found).into(posterImage);
@@ -250,10 +363,23 @@ public class AboutMovie extends AppCompatActivity {
                 Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
             }
             movie_name.setText(movieDetails.getTitle());
+            //set movie description
             movie_description.setText(movieDetails.getOverview());
+            description = movieDetails.getOverview();
+            //--------------
+
+            //set rating
             movie_voteAverage.setText(String.valueOf(movieDetails.getVote_average()));
-            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals(""))release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            rating = String.valueOf(movieDetails.getVote_average());
+            //--------------
+            if(movieDetails.getRelease_date() != null && !movieDetails.getRelease_date().equals("")){
+                release_year.setText(movieDetails.getRelease_date().substring(0,4));
+            }
+
+            //set language
             movie_language.setText(movieDetails.getOriginal_language().toUpperCase());
+            language = movieDetails.getOriginal_language().toUpperCase();
+            //------------
         }
     }
 
@@ -261,7 +387,7 @@ public class AboutMovie extends AppCompatActivity {
         TvShowModel model = (TvShowModel)getIntent().getSerializableExtra("obj");
         type = "tv";
         int index = getIntent().getIntExtra("position",0);
-        String img_path = model.getResults().get(index).getPoster_path();
+        img_path = model.getResults().get(index).getPoster_path();
         movieId = model.getResults().get(index).getId(); //Get Movie Id to set it as favourite
         //check if the movie is favourite
         MovieID mID = MrProjectApp.getMovieID();
@@ -282,10 +408,23 @@ public class AboutMovie extends AppCompatActivity {
                 Picasso.get().load("https://image.tmdb.org/t/p/original" + img_path).into(posterImage);
             }
             movie_name.setText(tvShowDetails.getName());
+            //set movie description
             movie_description.setText(tvShowDetails.getOverview());
+            description = tvShowDetails.getOverview();
+            //--------------
+
+            //set rating
             movie_voteAverage.setText(String.valueOf(tvShowDetails.getVote_average()));
-            if(tvShowDetails.getFirst_air_date() != null && !tvShowDetails.getFirst_air_date().equals(""))release_year.setText(tvShowDetails.getFirst_air_date().substring(0,4));
+            rating = String.valueOf(tvShowDetails.getVote_average());
+            //--------------
+            if(tvShowDetails.getFirst_air_date() != null && !tvShowDetails.getFirst_air_date().equals("")){
+                release_year.setText(tvShowDetails.getFirst_air_date().substring(0,4));
+            }
+
+            //set language
             movie_language.setText(tvShowDetails.getOriginal_language().toUpperCase());
+            language = tvShowDetails.getOriginal_language().toUpperCase();
+            //------------
         }
     }
 

@@ -84,15 +84,25 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player_life_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity = "center"
+        android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:id = "@+id/quiz_image_holder"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/player_life_container"
         app:cardBackgroundColor="#303030"
         app:cardCornerRadius="15dp"
         app:cardElevation="20dp"
@@ -234,6 +244,9 @@
             />
 
     </RelativeLayout>
+
+    </LinearLayout>
+    </ScrollView>
 
 
 

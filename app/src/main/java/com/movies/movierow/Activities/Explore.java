@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Explore extends AppCompatActivity {
     private int page = 2;
-    ImageButton go_back_button,search,trending,home;
+    ImageButton go_back_button,search,trending,home,fav_page;
     private RecyclerView recyclerView;
     private FeedAdapter feedAdapter;
     private ProgressBar loadingPb;
@@ -78,6 +78,14 @@ public class Explore extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),Trending.class));
+            }
+        });
+
+        fav_page = findViewById(R.id.fav_page);
+        fav_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Favorite.class));
             }
         });
 

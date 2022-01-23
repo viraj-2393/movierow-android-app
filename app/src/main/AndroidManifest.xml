@@ -19,14 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRow"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.Quizz"></activity>
+        <activity android:name=".Activities.YourFavs"></activity>
+        <activity android:name=".Activities.Favorite" />
+        <activity android:name=".Activities.Quizz" />
         <activity android:name=".Activities.Explore" />
         <activity android:name=".Activities.Trending" />
         <activity android:name=".Activities.ForgotPassword" />
         <activity android:name=".Activities.VerifyOtp" />
         <activity
             android:name=".Activities.YtubePlayer"
-            android:exported="true" />
+            android:exported="true"
+            android:configChanges="orientation|screenSize"
+            />
         <activity android:name=".Activities.NoInternet" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.LoginActivity" />

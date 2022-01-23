@@ -19,6 +19,7 @@ import com.movies.movierow.API.Movies;
 import com.movies.movierow.Adapters.KidPosterAdapter;
 import com.movies.movierow.Adapters.PosterAdapter;
 import com.movies.movierow.Adapters.TvShowPosterAdapter;
+import com.movies.movierow.Controllers.ViewModal;
 import com.movies.movierow.Models.KidMoviesModel;
 import com.movies.movierow.Models.PopularMoviesModel;
 import com.movies.movierow.Models.TvShowModel;
@@ -47,6 +48,7 @@ public class Home extends AppCompatActivity {
     TextView username;
     CircleImageView profile;
     AppCompatButton go_to_quiz;
+    ImageButton fav_page;
 
     TextView today_date;
     private long pressedTime;
@@ -55,7 +57,6 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_home);
-
         search = findViewById(R.id.search);
         profile = findViewById(R.id.profile_image);
         trending = findViewById(R.id.trending);
@@ -63,6 +64,7 @@ public class Home extends AppCompatActivity {
         today_date = findViewById(R.id.today_date);
         explore_movies = findViewById(R.id.explore);
         go_to_quiz = findViewById(R.id.quizz);
+        fav_page = findViewById(R.id.fav_page);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User",MODE_APPEND);
         String name = sharedPreferences.getString("name","Explore");
@@ -113,6 +115,13 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),Quizz.class));
+            }
+        });
+
+        fav_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Favorite.class));
             }
         });
 
